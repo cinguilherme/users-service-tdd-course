@@ -1,12 +1,11 @@
+
 const express = require('express');
-import {Response, Request} from 'express';
+import {router as helloRouter} from './http-in/routes'
 
 export const startService = (port: number) => {
     const app = express();
 
-    app.get('/hello', (req: Request, res: Response) => {
-        res.send({name: 'cintra', details: 'hello from the service'});
-    });
+    app.use('/hello', helloRouter);
 
     app.listen(port, () => {
         console.log('app running');
