@@ -1,18 +1,22 @@
 import {Request, Response} from 'express';
 import {createUsers} from "../../models/users";
-import {User} from "../../schemas/UserSchema";
 
 export const createUsersHandler = async (req: Request, res: Response) => {
     const user = req.body;
 
-    console.log('create user params', user);
+    const result = await createUsers(user);
 
-    const created = await createUsers(user);
+    if(result.success) {
+        res.status(201);
+        res.send({
+            result: result.created
+        });
+    } else {
+        res.status(400)
+        res.send({
+            result: result.fail
+        })
+    }
 
-    console.log('on handler: created => ', created);
 
-    res.status(201);
-    res.send({
-        result: created
-    });
 }

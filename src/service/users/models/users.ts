@@ -1,26 +1,14 @@
 import {PrismaClient} from '@prisma/client'
-import {CreateUserInput, User} from "../schemas/UserSchema";
+import {User} from "../schemas/UserSchema";
+import {createUsers} from "./db/createUser";
+import {getAllUsers} from "./db/getAllUsers";
 
 export async function getUsers() {
-    const prisma = new PrismaClient()
-    const res = await prisma.user.findMany();
-    await prisma.$disconnect();
-    return res;
+    return await getAllUsers()
 }
 
-export async function createUsers(user: CreateUserInput) {
-    const prisma = new PrismaClient()
-
-    const created = await prisma.user.create({
-        data: user
-    }).catch(e => {
-        console.log(e)
-        return {error: e}
-    });
-
-    await prisma.$disconnect();
-
-    return created;
+export async function createUser(user: User) {
+    return await createUsers(user)
 }
 
 export async function updateUsers(user: User) {
