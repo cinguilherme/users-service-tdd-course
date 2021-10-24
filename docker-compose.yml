@@ -4,4 +4,7 @@ services:
 
   postgres-users-dev:
     image: postgres
-    #
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD:mysecretpassword
+      - POSTGRES_HOST_AUTH_METHOD=trust
