@@ -2,16 +2,26 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.UserCreateInput[] = [
+interface User {
+    username: string
+    email: string
+}
+
+const userData: User[] = [
     {
-        username: "testuser"
+        username: "testuser",
+        email: "testuser@email.com"
     },
     {
-        username: "samus"
+        username: "samus",
+        email: "smaul@metroid.com"
     },
 ]
 
 async function main() {
+    console.log('clear db')
+    await prisma.user.deleteMany();
+
     console.log(`Start seeding ...`)
     for (const u of userData) {
         const user = await prisma.user.create({
