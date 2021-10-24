@@ -6,6 +6,9 @@ const userData: Prisma.UserCreateInput[] = [
     {
         username: "testuser"
     },
+    {
+        username: "samus"
+    },
 ]
 
 async function main() {
