@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+
+  postgres-users-dev:
+    image: postgres
+    #
