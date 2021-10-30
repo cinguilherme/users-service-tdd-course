@@ -1,4 +1,4 @@
-import {CreateUserInput} from "../../schemas/UserSchema";
+import {CreateUserInput} from "../../schematas/UserSchema";
 import {Prisma, PrismaClient} from "@prisma/client";
 
 export interface CreateUserResult {
