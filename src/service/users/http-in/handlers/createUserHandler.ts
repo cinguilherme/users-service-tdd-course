@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
-import {createUsers} from "../../models/users";
+import {createUser} from "../../models/users";
 
 export const createUsersHandler = async (req: Request, res: Response) => {
     const user = req.body;
 
-    const result = await createUsers(user);
+    const result = await createUser(user);
 
     if(result.success) {
         res.status(201);
