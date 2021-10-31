@@ -1,15 +1,18 @@
 import { UserToCreate } from "../schematas/user.schemata"
 
 interface ValidationResult {
+    field: string
     valid: boolean
     details?: string
 }
 
 type ValidationFunction = (something: any) => ValidationResult
 
-type Validation = (schemata: UserToCreate) => {
+export interface ValidationsResult {
     validations: Array<ValidationResult>
 }
+
+type Validation = (schemata: UserToCreate) => ValidationsResult
 
 export const validateCreateUserSchemata: Validation = (schemata: UserToCreate) => {
 
@@ -23,21 +26,40 @@ export const validateCreateUserSchemata: Validation = (schemata: UserToCreate) =
 
 export const validateUsername: ValidationFunction = (username: string) => {
 
-    const valid = username.length > 5
-    const details = valid ? "" : "Username not valid"
-    return {
-        valid,
-        details
+    try {
+        const valid = username.length > 5
+        const details = valid ? "" : "Username not valid"
+        return {
+            field: "user",
+            valid,
+            details
+        }
+    } catch (e) {
+
+        return {
+            field: "user",
+            valid: false,
+            details: "unkonwn error"
+        }
     }
 }
 
-export const validateUserEmail = (email: string) => {
+export const validateUserEmail: ValidationFunction = (email: string) => {
 
-    const valid = email.length > 5
-    const details = valid ? "" : "Email not valid"
+    try {
+        const valid = email.length > 5
+        const details = valid ? "" : "Email not valid"
 
-    return {
-        valid,
-        details
+        return {
+            field: "email",
+            valid,
+            details
+        }
+    } catch (e) {
+        return {
+            field: "email",
+            valid: false,
+            details: "unkown error"
+        }
     }
 }
