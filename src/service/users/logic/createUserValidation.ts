@@ -12,8 +12,7 @@ type Validation = (schemata: UserToCreate) => {
 }
 
 export const validateCreateUserSchemata: Validation = (schemata: UserToCreate) => {
-    console.log(schemata);
-    
+
     return {
         validations: [
             validateUserEmail(schemata.email),
@@ -35,8 +34,10 @@ export const validateUsername: ValidationFunction = (username: string) => {
 export const validateUserEmail = (email: string) => {
 
     const valid = email.length > 5
+    const details = valid ? "" : "Email not valid"
 
     return {
-        valid
+        valid,
+        details
     }
 }

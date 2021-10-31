@@ -35,7 +35,7 @@ export const createUserSchemataValidation = (req: Request, res: Response, next: 
     res.status(400)
     res.send({
       createUserValidation: "Not possible to create user with sent data",
-      validations: validation.validations
+      validations: validation.validations.filter(v => v.valid == false).map(f => f.details!)
     })
   } else {
     next()
