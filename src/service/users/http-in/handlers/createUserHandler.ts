@@ -15,24 +15,25 @@ interface Result {
 export const createUsersHandler = async (req: Request, res: Response) => {
 
     const result: Result = await Promise
-        .resolve(wireToCreateUserSchemata(req.body))
-        .then(makeSchemata())
-        .then(createUser())
+        .resolve(req.body)
+        .then(wireToCreateUserSchemata)
+        .then(validateSchemata())
+        .then(createUserBang())
 
-    resolveRequest(result, res)
+    resolveRequestBang(result, res)
 }
 
-const resolveRequest = (result: Result, response: Response) => {
+const resolveRequestBang = (result: Result, response: Response) => {
 
     const resultCreation = _.get(result, 'result');
     if (resultCreation) {
-        resolveRequestBang(resultCreation, response)
+        resolveRequestCreate(resultCreation, response)
     } else {
         resolveValidationRequest(result, response);
     }
 }
 
-const resolveRequestBang = (result: CreateUserResult, res: Response) => {
+const resolveRequestCreate = (result: CreateUserResult, res: Response) => {
     if (result.success) {
         res.status(201);
         res.send({
@@ -48,7 +49,7 @@ const resolveRequestBang = (result: CreateUserResult, res: Response) => {
 
 type CreateUserF = () => (comp: { schemata: UserToCreate, validations: ValidationsResult }) => Promise<Result>
 
-const createUser: CreateUserF = () => {
+const createUserBang: CreateUserF = () => {
     return async (comp: { schemata: UserToCreate, validations: ValidationsResult }) => {
         const { schemata, validations } = comp;
 
@@ -69,7 +70,7 @@ const createUser: CreateUserF = () => {
 }
 
 
-function resolveValidationRequest(result: Result, response: Response) {
+const resolveValidationRequest = (result: Result, response: Response) => {
     response.status(400)
     response.send({
         validations: result.validations
@@ -77,7 +78,7 @@ function resolveValidationRequest(result: Result, response: Response) {
 
 }
 
-function makeSchemata(): ((value: UserToCreate) => { schemata: UserToCreate; validations: import("/Users/guilhermecintra/Development/users-service-tdd/users-service-tdd-course/src/service/users/logic/createUserValidation").ValidationsResult; } | PromiseLike<{ schemata: UserToCreate; validations: import("/Users/guilhermecintra/Development/users-service-tdd/users-service-tdd-course/src/service/users/logic/createUserValidation").ValidationsResult; }>) | null | undefined {
+const validateSchemata = () => {
     return (schemata: UserToCreate) => {
         return {
             schemata,
