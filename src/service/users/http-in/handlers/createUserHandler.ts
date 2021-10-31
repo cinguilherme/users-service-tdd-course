@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { Request, Response } from 'express';
-import { createUser } from "../../models/users";
 import { UserToCreate } from '../../schematas/user.schemata';
 import { wireToCreateUserSchemata } from '../../diplomats/userDiplomat';
 import { validateCreateUserSchemata } from '../../logic/createUserValidation';
@@ -10,7 +9,7 @@ export const createUsersHandler = async (req: Request, res: Response) => {
 
     const schemata: UserToCreate = wireToCreateUserSchemata(req.body);
     const validations = validateCreateUserSchemata(schemata);
-    
+
     if (validations.validations.some(v => v.valid === false)) {
         res.status(400)
         res.send({

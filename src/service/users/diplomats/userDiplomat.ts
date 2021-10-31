@@ -1,9 +1,6 @@
-import { get } from 'lodash';
-import { Request, Response } from "express";
-import { validateCreateUserSchemata, validateUsername } from "../logic/createUserValidation";
 import { CreateUserWire, UserToCreate } from "../schematas/user.schemata"
 
-type WireToSchemata = (body: any) => UserToCreate
+type WireToSchemata = (body: CreateUserWire) => UserToCreate
 
 export const wireToCreateUserSchemata: WireToSchemata = (body) => {
 
