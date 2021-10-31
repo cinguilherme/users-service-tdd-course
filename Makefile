@@ -8,5 +8,8 @@ unit:
 dev:
 	npm run dev
 
+migrate-dev:
+	npx prisma migrate dev
+
 seed:
 	npx prisma db seed

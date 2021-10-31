@@ -1,17 +1,43 @@
+import { get } from 'lodash';
 import { Request, Response } from "express";
-import { User } from "../schematas/UserSchema"
+import { validateCreateUserSchemata, validateUsername } from "../logic/createUserValidation";
+import { CreateUserWire, UserToCreate } from "../schematas/UserSchema"
 
-export const wireTomodel = (req: Request, res: Response, next: Function) => {
-  console.log("transforming the outside world data into my internal free form data");
+export const wireToCreateUserSchemata = (req: Request, res: Response, next: Function) => {
 
-  const wire = req.body;
+  const { user, email } = req.body;
+  req.body = { user, email }
 
-  const user: User = {
-    username: wire.username,
-    email: wire.email
+  const wire: CreateUserWire = req.body;
+
+  if (get(wire, 'email') == null || get(wire, 'user') == null) {
+    res.status(400)
+    res.send({ message: "required fields email and user" })
+  } else {
+    const userToCreate: UserToCreate = {
+      username: wire.user,
+      email: wire.email
+    }
+
+    req.body.schemata = userToCreate;
+
+    next()
   }
-  req.body.internal = user;
-  console.log("altered req.body adding internal with user");
+}
 
-  next()
+export const createUserSchemataValidation = (req: Request, res: Response, next: Function) => {
+
+  const validation = validateCreateUserSchemata(req.body.schemata);
+
+  if (validation.validations.some(v => v.valid === false)) {
+    console.log("validations failed");
+
+    res.status(400)
+    res.send({
+      createUserValidation: "Not possible to create user with sent data",
+      validations: validation.validations
+    })
+  } else {
+    next()
+  }
 }

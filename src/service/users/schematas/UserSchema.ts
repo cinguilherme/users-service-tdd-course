@@ -10,6 +10,11 @@ export interface UserToCreate {
     email: string
 }
 
+export interface CreateUserWire {
+    user: string
+    email: string
+}
+
 export interface CreateUserInput {
     username: string
     email: string

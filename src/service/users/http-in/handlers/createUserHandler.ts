@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { createUser } from "../../models/users";
+import { UserToCreate } from '../../schematas/UserSchema';
 
 export const createUsersHandler = async (req: Request, res: Response) => {
 
-    const user = req.body.internal;
+    const user: UserToCreate = req.body.schemata;
 
     const result = await createUser(user);
 
