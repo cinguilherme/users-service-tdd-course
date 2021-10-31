@@ -1,4 +1,4 @@
-import { UserToCreate } from "../schematas/UserSchema"
+import { UserToCreate } from "../schematas/user.schemata"
 
 interface ValidationResult {
     valid: boolean

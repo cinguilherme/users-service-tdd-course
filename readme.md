@@ -11,3 +11,4 @@
 - This structure will provide a way to develop and evolve a service structured
   with hexagonal architecture in mind and Test as a way to deternmine design of
   solutions.
+  

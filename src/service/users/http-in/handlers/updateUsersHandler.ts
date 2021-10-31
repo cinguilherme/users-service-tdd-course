@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {createUser} from "../../models/users";
-import {User} from "../../schematas/UserSchema";
+import {User} from "../../schematas/user.schemata";
 
 export const updateUsersHandler = async (req: Request, res: Response) => {
     const user: User = req.body.username;

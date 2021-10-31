@@ -1,5 +1,5 @@
 import {PrismaClient} from '@prisma/client'
-import {User} from "../schematas/UserSchema";
+import {User} from "../schematas/user.schemata";
 import {createUsers} from "./db/createUser";
 import {getAllUsers} from "./db/getAllUsers";
 

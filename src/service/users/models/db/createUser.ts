@@ -1,10 +1,10 @@
-import {CreateUserInput} from "../../schematas/UserSchema";
-import {Prisma, PrismaClient} from "@prisma/client";
+import { CreateUserInput } from "../../schematas/user.schemata";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export interface CreateUserResult {
     success: boolean
     created?: any
-    fail?: any[]
+    fail?: Array<any>
 }
 
 type CreateUser = (user: CreateUserInput) => Promise<CreateUserResult>
